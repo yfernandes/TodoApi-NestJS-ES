@@ -1,9 +1,7 @@
-import { Module, OnModuleInit } from '@nestjs/common';
-import { CqrsModule, EventBus } from '@nestjs/cqrs';
+import { Module } from '@nestjs/common';
+import { EventSourcingModule, EventBus } from '@tokilabs/nestjs-eventsourcing';
 import { ConfigModule } from 'nestjs-config';
 import * as path from 'path';
-
-import { EventStore, EventStoreModule } from './shared/eventStore';
 
 @Module({
   imports: [
@@ -13,19 +11,9 @@ import { EventStore, EventStoreModule } from './shared/eventStore';
         modifyConfigName: (name) => name.replace('.config', ''),
       },
     ),
-    CqrsModule,
-    EventStoreModule.forRoot(),
+    EventSourcingModule,
   ],
 })
-export class BootstrapModule implements OnModuleInit {
-  constructor(
-    private readonly event$: EventBus,
-    private readonly eventStore: EventStore,
-  ) {}
-
-  onModuleInit() {
-    /** ------------ */
-    this.eventStore.bridgeEventsTo((this.event$ as any).subject$);
-    this.event$.publisher = this.eventStore;
-  }
+export class BootstrapModule {
+  constructor(private readonly eventBus: EventBus) {}
 }
