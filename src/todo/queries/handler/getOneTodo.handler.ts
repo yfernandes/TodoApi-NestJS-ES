@@ -2,7 +2,7 @@ import { IQueryHandler, QueryHandler } from '@tokilabs/nestjs-eventsourcing';
 import { Todo as TodoModel } from '.prisma/client';
 
 import { PrismaService } from '../../../shared/services/prisma.service';
-import { GetOneTodoQuery } from '../../queries';
+import { GetOneTodoQuery } from '..';
 
 @QueryHandler(GetOneTodoQuery)
 export class GetOneTodoHandler implements IQueryHandler<GetOneTodoQuery> {

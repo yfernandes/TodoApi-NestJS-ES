@@ -4,7 +4,7 @@ import {
 } from '@tokilabs/nestjs-eventsourcing';
 import { Todo } from '../../todo.entity';
 
-import { CreateTodoCommand } from '../../commands';
+import { CreateTodoCommand } from '..';
 
 @CommandHandler(CreateTodoCommand)
 export class CreateTodoHandler implements ICommandHandler<CreateTodoCommand> {

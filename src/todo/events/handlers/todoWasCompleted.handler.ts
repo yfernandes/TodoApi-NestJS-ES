@@ -1,5 +1,5 @@
 import { EventsHandler, IEventHandler } from '@tokilabs/nestjs-eventsourcing';
-import { TodoWasCompleted } from './../../events/todoWasCompleted.event';
+import { TodoWasCompleted } from '../todoWasCompleted.event';
 
 @EventsHandler(TodoWasCompleted)
 export class todoWasCompletedHandler

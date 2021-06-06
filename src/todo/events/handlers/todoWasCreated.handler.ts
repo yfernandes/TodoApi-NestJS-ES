@@ -1,7 +1,7 @@
 import { IEventHandler } from '@tokilabs/nestjs-eventsourcing';
 import { EventsHandler } from '@tokilabs/nestjs-eventsourcing/dist/decorators/events-handler.decorator';
 
-import { TodoWasCreatedEvent } from '../../events/todoWasCreated.event';
+import { TodoWasCreatedEvent } from '../todoWasCreated.event';
 
 @EventsHandler(TodoWasCreatedEvent)
 export class TodoWasCreatedHandler
