@@ -11,11 +11,11 @@ import {
 import { CommandBus, QueryBus } from '@tokilabs/nestjs-eventsourcing';
 
 import { ValidationPipe } from '../shared/validation.pipe';
-import { RemoveTodoCommand } from './commands/removeTodo.command';
+import { RemoveTodoCommand } from './commands/definition';
 
 import { CreateTodoDto, UpdateTodoDto } from './dtos';
 import { Todo } from './todo.entity';
-import { CreateTodoCommand, UpdateTodoCommand } from './commands';
+import { CreateTodoCommand, UpdateTodoCommand } from './commands/definition';
 import { GetAllTodosQuery, GetOneTodoQuery } from './queries';
 
 @UsePipes(new ValidationPipe())

@@ -1,5 +1,5 @@
 import { IEvent } from '@tokilabs/nestjs-eventsourcing';
-export class TodoWasCreatedEvent implements IEvent {
+export class TodoCreatedEvent implements IEvent {
   constructor(
     public readonly id: string,
     public readonly title: string,

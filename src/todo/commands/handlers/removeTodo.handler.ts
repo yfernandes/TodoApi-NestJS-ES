@@ -2,7 +2,7 @@ import {
   CommandHandler,
   ICommandHandler,
 } from '@tokilabs/nestjs-eventsourcing';
-import { RemoveTodoCommand } from 'src/todo/commands';
+import { RemoveTodoCommand } from '../definition/';
 
 @CommandHandler(RemoveTodoCommand)
 export class RemoveTodoHandler implements ICommandHandler<RemoveTodoCommand> {

@@ -1,3 +1,3 @@
-import { TodoWasCreatedHandler } from './todoWasCreated.handler';
+import { TodoWasCreatedHandler } from './todoCreated.handler';
 
 export const TodoEventHandlers = [TodoWasCreatedHandler];

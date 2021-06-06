@@ -3,13 +3,13 @@ import {
   IEventHandler,
 } from '@tokilabs/nestjs-eventsourcing';
 
-import { TodoWasCreatedEvent } from '../events/todoWasCreated.event';
+import { TodoCreatedEvent } from '../events/definition';
 
-@ProjectionHandler(TodoWasCreatedEvent)
+@ProjectionHandler(TodoCreatedEvent)
 export class TodoWasCreatedProjection
-  implements IEventHandler<TodoWasCreatedEvent>
+  implements IEventHandler<TodoCreatedEvent>
 {
-  async handle(event: TodoWasCreatedEvent) {
+  async handle(event: TodoCreatedEvent) {
     console.log('Event Projection Handled', event);
     return null;
   }

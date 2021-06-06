@@ -1,5 +1,5 @@
 import { ICommand } from '@tokilabs/nestjs-eventsourcing';
-import { UpdateTodoDto } from '../dtos/updateTodo.dto';
+import { UpdateTodoDto } from '../../dtos/';
 
 export class UpdateTodoCommand implements ICommand {
   constructor(

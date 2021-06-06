@@ -1,5 +1,5 @@
 import { IEvent } from '@tokilabs/nestjs-eventsourcing';
 
-export class TodoWasCompleted implements IEvent {
+export class TitleUpdatedEvent implements IEvent {
   public readonly done = true;
 }
