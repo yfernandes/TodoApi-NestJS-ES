@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { Todo } from '../todo.entity';
-import { ITodoRepository } from '../todo.repository';
+import { ITodoRepository } from './todo.repository';
 
 @Injectable()
 export class TodoEventStore implements ITodoRepository {

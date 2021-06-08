@@ -1,4 +1,4 @@
-import { AggregateRoot, EventBus } from '@tokilabs/nestjs-eventsourcing';
+import { AggregateRoot } from '@tokilabs/nestjs-eventsourcing';
 
 import { nanoid } from 'nanoid';
 import { TodoCompletedEvent } from './events/definition/todoCompleted.event';
@@ -22,10 +22,10 @@ export class Todo extends AggregateRoot {
 
   constructor(title: string, description: string, done: boolean) {
     super();
-    this.apply(new TodoCreatedEvent(nanoid(), title, description, done));
+    this.applyChange(new TodoCreatedEvent(nanoid(), title, description, done));
   }
 
   complete(): void {
-    this.apply(new TodoCompletedEvent());
+    this.applyChange(new TodoCompletedEvent());
   }
 }

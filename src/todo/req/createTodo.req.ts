@@ -1,6 +1,6 @@
 import { IsBoolean, IsString } from 'class-validator';
 
-export class CreateTodoDto {
+export class CreateTodoReq {
   @IsString()
   readonly title!: string;
 

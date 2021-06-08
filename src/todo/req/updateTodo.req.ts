@@ -1,6 +1,6 @@
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTodoDto {
+export class UpdateTodoReq {
   @IsOptional()
   @IsString()
   readonly title?: string;

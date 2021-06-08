@@ -8,48 +8,53 @@ import {
   Delete,
   UsePipes,
 } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@tokilabs/nestjs-eventsourcing';
+import { PrismaService } from './../shared/services/prisma.service';
 
 import { ValidationPipe } from '../shared/validation.pipe';
-import { RemoveTodoCommand } from './commands/definition';
 
-import { CreateTodoDto, UpdateTodoDto } from './dtos';
+import { CreateTodoReq, UpdateTodoReq } from './req';
 import { Todo } from './todo.entity';
-import { CreateTodoCommand, UpdateTodoCommand } from './commands/definition';
-import { GetAllTodosQuery, GetOneTodoQuery } from './queries';
 
 @UsePipes(new ValidationPipe())
 @Controller('todo')
 export class TodoController {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   @Post()
-  async createTodo(@Body() dto: CreateTodoDto) {
-    // console.log(dto);
-    return this.commandBus.execute(new CreateTodoCommand(dto));
+  async createTodo(@Body() req: CreateTodoReq) {
+    const { title, description, done } = req;
+
+    const todo = new Todo(title, description, done);
+    // todo.setBus(this.eventBus);
+
+    todo.complete();
+    return null;
   }
 
   @Get()
-  async findAllTodo(): Promise<Todo[]> {
-    return this.queryBus.execute(new GetAllTodosQuery());
+  async findAllTodo(): Promise<any[]> {
+    const x = this.prisma.todo.findMany({});
+    return x;
   }
 
   @Get(':id')
-  async findOneTodo(@Param('id') id: string): Promise<Todo> {
-    return this.queryBus.execute(new GetOneTodoQuery(id));
+  async findOneTodo(@Param('id') id: string): Promise<any> {
+    const x = await this.prisma.todo.findUnique({ where: { id } });
+    return x;
   }
 
   @Patch(':id')
-  async updateTodo(@Body() dto: UpdateTodoDto, @Param('id') id: string) {
-    console.log(dto);
-    return this.commandBus.execute(new UpdateTodoCommand(id, dto));
+  async updateTodo(@Body() req: UpdateTodoReq, @Param('id') id: string) {
+    console.log('UpdateNewTodo Handler', req);
+
+    const { title, description, done } = req;
+
+    // const todo: Todo = await this.eventStore.find(command.id);
+    console.log(title, description, done, id /* todo */);
   }
 
   @Delete(':id')
   async removeTodo(@Param('id') id: string) {
-    return this.commandBus.execute(new RemoveTodoCommand(id));
+    console.log(id);
   }
 }

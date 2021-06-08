@@ -3,7 +3,7 @@ import {
   IEventHandler,
 } from '@tokilabs/nestjs-eventsourcing';
 
-import { TodoCreatedEvent } from '../events/definition';
+import { TodoCreatedEvent } from '../../events/definition';
 
 @ProjectionHandler(TodoCreatedEvent)
 export class TodoWasCreatedProjection
