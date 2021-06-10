@@ -1,6 +1,6 @@
+import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/dist';
 import { AggregateRoot } from '@tokilabs/nestjs-eventsourcing';
 
-import { nanoid } from 'nanoid';
 import { TodoCompletedEvent } from './events/definition/todoCompleted.event';
 import { TodoCreatedEvent } from './events/definition/todoCreated.event';
 
@@ -21,8 +21,8 @@ export class Todo extends AggregateRoot {
   }
 
   constructor(title: string, description: string, done: boolean) {
-    super();
-    this.applyChange(new TodoCreatedEvent(nanoid(), title, description, done));
+    super(new NanoGuidIdentity());
+    // this.applyChange(new TodoCreatedEvent(this.id, title, description, done));
   }
 
   complete(): void {

@@ -1,26 +1,28 @@
+import { TodoEventsDefinition } from './events/definition/index';
 import { Module } from '@nestjs/common';
 import { EventSourcingModule } from '@tokilabs/nestjs-eventsourcing/';
 
 import { PrismaService } from '../shared/services/prisma.service';
-import { TodoEventStore } from './data/todo.eventStore';
+import { TodoEventStoreRepository } from './data/todo.eventStore';
 
 import { TodoController } from './todo.controller';
-import { TodoCommandHandlers } from './commands/handlers';
-import { TodoQueryHandlers } from './queries/handler';
 import { TodoEventHandlers } from './events/handlers';
+import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/dist';
 // import { TodoProjectionHandlers } from './projections';
 
 @Module({
   // The order of imports matter!
-  imports: [EventSourcingModule.register({})],
+  imports: [
+    EventSourcingModule.register({
+      eventsDefinition: [...TodoEventsDefinition],
+    }),
+  ],
   controllers: [TodoController],
   providers: [
-    TodoEventStore,
-    ...TodoCommandHandlers,
-    ...TodoQueryHandlers,
+    TodoEventStoreRepository,
     ...TodoEventHandlers,
-    // ...TodoProjectionHandlers,
     PrismaService,
+    NanoGuidIdentity,
   ],
 })
 export class TodoModule {}

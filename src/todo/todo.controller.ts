@@ -1,3 +1,4 @@
+import { TodoEventStoreRepository } from './data/todo.eventStore';
 import {
   Controller,
   Get,
@@ -14,11 +15,16 @@ import { ValidationPipe } from '../shared/validation.pipe';
 
 import { CreateTodoReq, UpdateTodoReq } from './req';
 import { Todo } from './todo.entity';
+import { NanoGuid } from '@tokilabs/lang';
+import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/';
 
 @UsePipes(new ValidationPipe())
 @Controller('todo')
 export class TodoController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly eventStore: TodoEventStoreRepository,
+  ) {}
 
   @Post()
   async createTodo(@Body() req: CreateTodoReq) {
@@ -28,19 +34,20 @@ export class TodoController {
     // todo.setBus(this.eventBus);
 
     todo.complete();
-    return null;
+
+    return this.eventStore.save(todo);
   }
 
   @Get()
   async findAllTodo(): Promise<any[]> {
-    const x = this.prisma.todo.findMany({});
-    return x;
+    return this.prisma.todo.findMany({});
   }
 
   @Get(':id')
   async findOneTodo(@Param('id') id: string): Promise<any> {
-    const x = await this.prisma.todo.findUnique({ where: { id } });
-    return x;
+    const identity = new NanoGuidIdentity(id);
+
+    return this.eventStore.getById(identity);
   }
 
   @Patch(':id')

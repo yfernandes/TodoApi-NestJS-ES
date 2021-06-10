@@ -1,8 +1,13 @@
 import { Todo } from '../todo.entity';
 
 export interface ITodoRepository {
-  get(todoId: string): Promise<Todo>;
-  getEvents(todoId: string): Promise<any[]>;
-  find(todoId: string): Promise<Todo> | null;
+  getById(todoId: string): Promise<Todo>;
   save(todo: Todo): void;
 }
+
+/* 
+export interface ITodoRepository {
+  getById(id: Guid): Promise<Todo>;
+  save(todo: Todo): Promise<IDomainEvent[]>;
+}
+ */
