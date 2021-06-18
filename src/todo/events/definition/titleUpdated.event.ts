@@ -1,5 +1,13 @@
-import { IEvent } from '@tokilabs/nestjs-eventsourcing';
+import {
+  IDomainEvent,
+  NanoGuidIdentity,
+  DomainEvent,
+} from '@tokilabs/nestjs-eventsourcing/';
 
-export class TitleUpdatedEvent implements IEvent {
-  public readonly done = true;
+@DomainEvent('todo.events.TitleUpdatedEvent')
+export class TitleUpdatedEvent implements IDomainEvent {
+  constructor(
+    public readonly id: NanoGuidIdentity,
+    public readonly title: string,
+  ) {}
 }

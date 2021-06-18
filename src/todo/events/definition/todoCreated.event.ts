@@ -1,8 +1,11 @@
-import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/dist';
-import { Event, IEvent } from '@tokilabs/nestjs-eventsourcing';
+import {
+  DomainEvent,
+  NanoGuidIdentity,
+  IDomainEvent,
+} from '@tokilabs/nestjs-eventsourcing/';
 
-@Event('TodoCreatedEvent')
-export class TodoCreatedEvent implements IEvent {
+@DomainEvent('todo.events.TodoCreatedEvent')
+export class TodoCreatedEvent implements IDomainEvent {
   constructor(
     public readonly id: NanoGuidIdentity,
     public readonly title: string,
