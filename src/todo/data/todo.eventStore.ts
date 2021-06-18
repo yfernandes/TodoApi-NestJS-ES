@@ -7,8 +7,6 @@ import {
 } from '@tokilabs/nestjs-eventsourcing/';
 
 import { Todo } from '../todo.entity';
-import { ITodoRepository } from './todo.repository';
-// implements ITodoRepository
 
 @Injectable()
 export class TodoEventStoreRepository extends EventStoreRepository<Todo> {

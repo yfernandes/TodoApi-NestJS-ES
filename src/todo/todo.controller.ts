@@ -1,4 +1,3 @@
-import { TodoEventStoreRepository } from './data/todo.eventStore';
 import {
   Controller,
   Get,
@@ -9,14 +8,13 @@ import {
   Delete,
   UsePipes,
 } from '@nestjs/common';
+import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/';
 import { PrismaService } from './../shared/services/prisma.service';
-
 import { ValidationPipe } from '../shared/validation.pipe';
 
+import { TodoEventStoreRepository } from './data/todo.eventStore';
 import { CreateTodoReq, UpdateTodoReq } from './req';
 import { Todo } from './todo.entity';
-import { NanoGuid } from '@tokilabs/lang';
-import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/';
 
 @UsePipes(new ValidationPipe())
 @Controller('todo')
@@ -31,9 +29,6 @@ export class TodoController {
     const { title, description, done } = req;
 
     const todo = new Todo(title, description, done);
-    // todo.setBus(this.eventBus);
-
-    todo.complete();
 
     return this.eventStore.save(todo);
   }
@@ -45,23 +40,34 @@ export class TodoController {
 
   @Get(':id')
   async findOneTodo(@Param('id') id: string): Promise<any> {
-    const identity = new NanoGuidIdentity(id);
-
-    return this.eventStore.getById(identity);
+    // It should actually get from the read model(Prisma), getting the raw event for now
+    return this.eventStore.getById(new NanoGuidIdentity(id));
   }
 
   @Patch(':id')
   async updateTodo(@Body() req: UpdateTodoReq, @Param('id') id: string) {
-    console.log('UpdateNewTodo Handler', req);
+    const todo: Todo = await this.eventStore.getById(new NanoGuidIdentity(id));
 
     const { title, description, done } = req;
 
-    // const todo: Todo = await this.eventStore.find(command.id);
-    console.log(title, description, done, id /* todo */);
+    if (title) {
+      todo.updateTitle(title);
+    }
+    if (description) {
+      todo.updateDescription(description);
+    }
+    if (done && !todo.done) {
+      todo.complete();
+    }
+
+    if (!done && todo.done) {
+      todo.complete();
+    }
+    return this.eventStore.save(todo);
   }
 
   @Delete(':id')
   async removeTodo(@Param('id') id: string) {
-    console.log(id);
+    throw new Error(`Route Not implemented. Received argument:${id}`);
   }
 }
