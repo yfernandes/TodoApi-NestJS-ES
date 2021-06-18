@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import {
-  EventSourcingModule /* EventBus */,
-} from '@tokilabs/nestjs-eventsourcing';
+import { EventSourcingModule } from '@tokilabs/nestjs-eventsourcing';
 import { ConfigModule } from 'nestjs-config';
 import * as path from 'path';
 
@@ -13,9 +11,10 @@ import * as path from 'path';
         modifyConfigName: (name) => name.replace('.config', ''),
       },
     ),
-    EventSourcingModule,
+    EventSourcingModule.register({
+      appPackageName: 'nes-todo-api',
+      appRoot: path.resolve(__dirname),
+    }),
   ],
 })
-export class BootstrapModule {
-  // constructor(private readonly eventBus: EventBus) {}
-}
+export class BootstrapModule {}
