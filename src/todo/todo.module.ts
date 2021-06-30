@@ -5,10 +5,15 @@ import { TodoEventStoreRepository } from './data/todo.eventStore';
 
 import { TodoController } from './todo.controller';
 import { TodoEventHandlers } from './events/handlers';
-// import { TodoProjectionHandlers } from './projections';
+import { TodoProjectionHandlers } from './data/projections';
 
 @Module({
   controllers: [TodoController],
-  providers: [TodoEventStoreRepository, ...TodoEventHandlers, PrismaService],
+  providers: [
+    TodoEventStoreRepository,
+    ...TodoEventHandlers,
+    ...TodoProjectionHandlers,
+    PrismaService,
+  ],
 })
 export class TodoModule {}
