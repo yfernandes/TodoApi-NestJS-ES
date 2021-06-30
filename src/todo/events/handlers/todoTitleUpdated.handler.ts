@@ -1,7 +1,7 @@
-import { EventsHandler, IEventHandler } from '@tokilabs/nestjs-eventsourcing';
+import { EventHandler, IEventHandler } from '@tokilabs/nestjs-eventsourcing';
 import { TitleUpdatedEvent } from '../definition';
 
-@EventsHandler(TitleUpdatedEvent)
+@EventHandler(TitleUpdatedEvent)
 export class TodoTitleUpdatedHandler
   implements IEventHandler<TitleUpdatedEvent>
 {

@@ -1,7 +1,7 @@
-import { EventsHandler, IEventHandler } from '@tokilabs/nestjs-eventsourcing';
+import { EventHandler, IEventHandler } from '@tokilabs/nestjs-eventsourcing';
 import { TodoUncompletedEvent } from '../definition/';
 
-@EventsHandler(TodoUncompletedEvent)
+@EventHandler(TodoUncompletedEvent)
 export class TodoUncompletedHandler
   implements IEventHandler<TodoUncompletedEvent>
 {

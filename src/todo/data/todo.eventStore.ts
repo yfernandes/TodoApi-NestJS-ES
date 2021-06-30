@@ -12,7 +12,7 @@ import { Todo } from '../todo.entity';
 export class TodoEventStoreRepository extends EventStoreRepository<Todo> {
   constructor(
     @Inject(EventStore) protected storage: IEventStore,
-    @Inject(EventBus) eventBus: EventBus,
+    protected readonly eventBus: EventBus,
   ) {
     super(Todo, storage, eventBus);
   }
