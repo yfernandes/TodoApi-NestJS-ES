@@ -1,14 +1,18 @@
 {
-	"cSpell.ignoreWords": [
-		"aksjdhbfalk",
-		"aksjdhbfalkçda",
-		"da",
-		"hhbmdla",
-		"juicycleff",
-		"rta",
-		"w",
-		"xq",
-		"y",
-		"yw"
-	]
+  "cSpell.ignoreWords": [
+    "aksjdhbfalk",
+    "aksjdhbfalkçda",
+    "da",
+    "hhbmdla",
+    "juicycleff",
+    "rta",
+    "w",
+    "xq",
+    "y",
+    "yw"
+  ],
+  "cSpell.words": [
+    "linebreak",
+    "tokilabs"
+  ]
 }

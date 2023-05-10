@@ -1,2 +1,2 @@
-import { TodoWasCreatedProjection } from './todoWasCreated.projection';
+import { TodoWasCreatedProjection } from "./todoWasCreated.projection";
 export const TodoProjectionHandlers = [TodoWasCreatedProjection];

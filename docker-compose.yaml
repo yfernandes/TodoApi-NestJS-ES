@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   eventstore.db:
@@ -15,8 +15,8 @@ services:
       - EVENTSTORE_KEEP_ALIVE_INTERVAL=-1
       - EVENTSTORE_KEEP_ALIVE_TIMEOUT=-1
     ports:
-      - '1113:1113'
-      - '2113:2113'
+      - "1113:1113"
+      - "2113:2113"
     volumes:
       - type: volume
         source: eventstore-volume-data

@@ -1,7 +1,7 @@
 import {
   AggregateRoot,
   NanoGuidIdentity,
-} from '@tokilabs/nestjs-eventsourcing/';
+} from "@tokilabs/nestjs-event-sourcing/";
 
 import {
   TitleUpdatedEvent,
@@ -9,7 +9,7 @@ import {
   TodoCompletedEvent,
   TodoUncompletedEvent,
   DescriptionUpdatedEvent,
-} from './events';
+} from "./events";
 
 export class Todo extends AggregateRoot {
   private _done: string;

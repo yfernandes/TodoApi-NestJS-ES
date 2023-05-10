@@ -1,23 +1,23 @@
-import { CreateTodoReq } from './req/createTodo.req';
-import { Test } from '@nestjs/testing';
-import { EventSourcingModule } from '@tokilabs/nestjs-eventsourcing';
-import * as path from 'path';
+import { CreateTodoReq } from "./req/createTodo.req";
+import { Test } from "@nestjs/testing";
+import { EventSourcingModule } from "@tokilabs/nestjs-event-sourcing";
+import * as path from "path";
 
-import { TodoController } from './todo.controller';
-import { PrismaService } from '../shared/services/prisma.service';
-import { TodoEventStoreRepository } from './data/todo.eventStore';
+import { TodoController } from "./todo.controller";
+import { PrismaService } from "../shared/services/prisma.service";
+import { TodoEventStoreRepository } from "./data/todo.eventStore";
 
-describe('TodoController', () => {
+describe("TodoController", () => {
   let todoController: TodoController;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         EventSourcingModule.register({
-          appPackageName: 'nes-todo-api',
+          appPackageName: "nes-todo-api",
           appRoot: path.resolve(__dirname),
-          transport: 'Mock',
-          eventStore: 'Mock',
+          transport: "Mock",
+          eventStore: "Mock",
         }),
       ],
       controllers: [TodoController],
@@ -27,9 +27,9 @@ describe('TodoController', () => {
     todoController = moduleRef.get<TodoController>(TodoController);
   });
 
-  describe('createTodo', () => {
-    it('When given a title it should return a new todo', async () => {
-      const req: CreateTodoReq = { title: 'MyTitle' };
+  describe("createTodo", () => {
+    it("When given a title it should return a new todo", async () => {
+      const req: CreateTodoReq = { title: "MyTitle" };
       const todo = await todoController.createTodo(req);
       expect(todo).toHaveLength(1);
     });

@@ -7,21 +7,21 @@ import {
   Param,
   Delete,
   UsePipes,
-} from '@nestjs/common';
-import { NanoGuidIdentity } from '@tokilabs/nestjs-eventsourcing/';
-import { PrismaService } from './../shared/services/prisma.service';
-import { ValidationPipe } from '../shared/validation.pipe';
+} from "@nestjs/common";
+import { NanoGuidIdentity } from "@tokilabs/nestjs-event-sourcing";
+import { PrismaService } from "./../shared/services/prisma.service";
+import { ValidationPipe } from "../shared/validation.pipe";
 
-import { TodoEventStoreRepository } from './data/todo.eventStore';
-import { CreateTodoReq, UpdateTodoReq } from './req';
-import { Todo } from './todo.entity';
+import { TodoEventStoreRepository } from "./data/todo.eventStore";
+import { CreateTodoReq, UpdateTodoReq } from "./req";
+import { Todo } from "./todo.entity";
 
 @UsePipes(new ValidationPipe())
-@Controller('todo')
+@Controller("todo")
 export class TodoController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly eventStore: TodoEventStoreRepository,
+    private readonly eventStore: TodoEventStoreRepository
   ) {}
 
   @Post()
@@ -34,18 +34,18 @@ export class TodoController {
   }
 
   @Get()
-  async findAllTodo(): Promise<any[]> {
+  async findAllTodo(): Promise<unknown[]> {
     return this.prisma.todo.findMany({});
   }
 
-  @Get(':id')
-  async findOneTodo(@Param('id') id: string): Promise<any> {
+  @Get(":id")
+  async findOneTodo(@Param("id") id: string): Promise<unknown> {
     // It should actually get from the read model(Prisma), getting the raw event for now
     return this.eventStore.getById(new NanoGuidIdentity(id));
   }
 
-  @Patch(':id')
-  async updateTodo(@Body() req: UpdateTodoReq, @Param('id') id: string) {
+  @Patch(":id")
+  async updateTodo(@Body() req: UpdateTodoReq, @Param("id") id: string) {
     const todo: Todo = await this.eventStore.getById(new NanoGuidIdentity(id));
 
     const { title, description, done } = req;
@@ -66,8 +66,8 @@ export class TodoController {
     return this.eventStore.save(todo);
   }
 
-  @Delete(':id')
-  async removeTodo(@Param('id') id: string) {
+  @Delete(":id")
+  async removeTodo(@Param("id") id: string) {
     throw new Error(`Route Not implemented. Received argument:${id}`);
   }
 }
